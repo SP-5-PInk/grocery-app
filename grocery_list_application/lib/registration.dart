@@ -50,9 +50,7 @@ class _RegistrationState extends State<Registration> {
       backgroundColor: Color(0xFFB6C7AC), // Set background color
       body: Padding(
         padding: const EdgeInsets.all(20.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
+        child: ListView(
           children: [
             Text(
               'Register',
@@ -80,26 +78,32 @@ class _RegistrationState extends State<Registration> {
               obscureText: true,
             ),
             SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: signUp,
-              child: Text("Register"),
+            Padding(
+              padding: const EdgeInsets.only(top: 5.0, bottom: 10.0),
+              child: ElevatedButton(
+                onPressed: signUp,
+                child: Text("Register"),
+              ),
             ),
             SizedBox(height: 10),
             Image.asset(
               'assets/clipart/homepagelogo.png',
               height: 160,
             ),
-            ElevatedButton(
-              onPressed: () {
-                // Navigate back to login page
-                Navigator.pop(context);
-              },
-              child: Text(
-                "Go Back",
-                style: TextStyle(color: Colors.white), // Change text color to white
-              ),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.black, // Change button color to black
+            Padding(
+              padding: const EdgeInsets.only(top: 10.0),
+              child: ElevatedButton(
+                onPressed: () {
+                  // Navigate back to login page
+                  Navigator.pop(context);
+                },
+                child: Text(
+                  "Go Back",
+                  style: TextStyle(color: Colors.white), // Change text color to white
+                ),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.black, // Change button color to black
+                ),
               ),
             ),
           ],

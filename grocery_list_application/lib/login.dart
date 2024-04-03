@@ -63,8 +63,11 @@ class _LoginState extends State<Login> {
                 obscureText: true,
               ),
   
-              SizedBox(height: 5),
-              ElevatedButton(onPressed: (()=>signIn()), child: Text("Login")),
+              //SizedBox(height: 5),
+              Padding(
+                padding: const EdgeInsets.only(top: 15.0),
+                child: ElevatedButton(onPressed: (()=>signIn()), child: Text("Login")),
+              ),
               SizedBox(height: 10),
               ElevatedButton(onPressed: () {
                 // Navigate to the Registration page when the button is pressed

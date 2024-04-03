@@ -37,6 +37,8 @@ dependencies:
   cupertino_icons: ^1.0.6
   firebase_core: ^2.28.0
   firebase_auth: ^4.19.0
+  flutter_slidable: ^1.2.0
+  material_symbols_icons: ^4.2719.3
 
 dev_dependencies:
   flutter_test:
