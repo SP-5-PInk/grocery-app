@@ -51,6 +51,7 @@ class _RegistrationState extends State<Registration> {
       body: Padding(
         padding: const EdgeInsets.all(20.0),
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Text(
@@ -87,7 +88,20 @@ class _RegistrationState extends State<Registration> {
             Image.asset(
               'assets/clipart/homepagelogo.png',
               height: 160,
-            )
+            ),
+            ElevatedButton(
+              onPressed: () {
+                // Navigate back to login page
+                Navigator.pop(context);
+              },
+              child: Text(
+                "Go Back",
+                style: TextStyle(color: Colors.white), // Change text color to white
+              ),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.black, // Change button color to black
+              ),
+            ),
           ],
         ),
       ),

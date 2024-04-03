@@ -34,6 +34,8 @@ class _LoginState extends State<Login> {
         body:Padding(
           padding: const EdgeInsets.all(20.0),
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
             Text(
               'Grocery App Login',
@@ -61,6 +63,7 @@ class _LoginState extends State<Login> {
                 obscureText: true,
               ),
   
+              SizedBox(height: 5),
               ElevatedButton(onPressed: (()=>signIn()), child: Text("Login")),
               SizedBox(height: 10),
               ElevatedButton(onPressed: () {
@@ -70,7 +73,13 @@ class _LoginState extends State<Login> {
                   MaterialPageRoute(builder: (context) => Registration()),
                 );
               },
-              child: Text("Register"),
+              child: Text(
+                "Register",
+                style: TextStyle(color: Colors.white), // Change text color to white
+              ),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.black, // Change button color to black
+              ),
             )
             ],),
         )

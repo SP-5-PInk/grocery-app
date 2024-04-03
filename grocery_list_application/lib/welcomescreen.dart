@@ -21,6 +21,7 @@ class WelcomeScreen extends StatelessWidget {
             style: TextStyle(
               fontSize: 24,
               fontWeight: FontWeight.bold,
+              fontFamily: 'Roboto', 
               color: Color.fromARGB(232, 2, 22, 10),
             ),
           ),
