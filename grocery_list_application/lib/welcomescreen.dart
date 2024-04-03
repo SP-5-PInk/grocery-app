@@ -48,7 +48,7 @@ class WelcomeScreen extends StatelessWidget {
                 context,
                 MaterialPageRoute(builder: (context) => Wrapper()),
               );
-            },
+            },         
             child: Text('Start'),
           ),
           SizedBox(height: 20),

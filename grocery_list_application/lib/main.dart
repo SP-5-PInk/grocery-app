@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:grocery_list_application/addlistpage.dart';
 import 'package:grocery_list_application/login.dart';
 import 'package:grocery_list_application/welcomescreen.dart';
 import 'package:grocery_list_application/wrapper.dart';
@@ -24,10 +25,11 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: Login(),
+      home: WelcomeScreen(),
       routes: {
         '/homepage' : (context) => HomePage(),
         '/listpage' : (context) => ListPage(),
+        '/addlistpage' : (context) => AddListPage(),
       },
     );
   }

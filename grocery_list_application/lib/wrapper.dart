@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:grocery_list_application/homepage.dart';
 import 'package:grocery_list_application/login.dart';
 import 'package:grocery_list_application/testhomepage.dart';
 
@@ -18,7 +19,7 @@ class _WrapperState extends State<Wrapper> {
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (context,snapshot){
           if (snapshot.hasData){
-            return Testhomepage();
+            return HomePage();
           }else{
             return Login();
           }
