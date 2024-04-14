@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:grocery_list_application/login.dart';
 import 'package:grocery_list_application/wrapper.dart';
 
 
@@ -46,7 +47,7 @@ class WelcomeScreen extends StatelessWidget {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => Wrapper()),
+                MaterialPageRoute(builder: (context) => Login()),
               );
             },         
             child: Text('Start'),
