@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:grocery_list_application/registration.dart';
-import 'package:grocery_list_application/homepage.dart'; // Import HomePage class
+import 'package:grocery_list_application/pages/registration.dart';
+import 'package:grocery_list_application/pages/home_page.dart'; // Import HomePage class
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);

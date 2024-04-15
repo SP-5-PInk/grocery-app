@@ -1,14 +1,8 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:grocery_list_application/addlistpage.dart';
-import 'package:grocery_list_application/login.dart';
-import 'package:grocery_list_application/welcomescreen.dart';
+import 'package:grocery_list_application/pages/login.dart';
+import 'package:grocery_list_application/pages/welcomescreen.dart';
 import 'package:grocery_list_application/wrapper.dart';
-
-import 'package:flutter/widgets.dart';
-//import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:grocery_list_application/homepage.dart';
-import 'package:grocery_list_application/listpage.dart';
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
@@ -26,11 +20,6 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: WelcomeScreen(),
-      routes: {
-        '/homepage' : (context) => HomePage(),
-        '/listpage' : (context) => ListPage(),
-        '/addlistpage' : (context) => AddListPage(),
-      },
     );
   }
 }

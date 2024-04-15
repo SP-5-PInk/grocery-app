@@ -1,8 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:grocery_list_application/homepage.dart';
-import 'package:grocery_list_application/login.dart';
-import 'package:grocery_list_application/testhomepage.dart';
+import 'package:grocery_list_application/pages/home_page.dart';
+import 'package:grocery_list_application/pages/login.dart';
 
 class Wrapper extends StatefulWidget {
   const Wrapper({super.key});
