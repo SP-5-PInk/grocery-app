@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -11,6 +12,9 @@ import 'package:provider/provider.dart';
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+
+  // Initialize Firestore
+  FirebaseFirestore.instance.settings = Settings(persistenceEnabled: true);
   runApp(MaterialApp(
     home: MultiProvider(providers: [
       Provider<AuthenticationService>(
@@ -29,6 +33,7 @@ class AuthenticationWrapper extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     final firebaseUser = context.watch<User?>();
     print(firebaseUser);
     if(firebaseUser != null){

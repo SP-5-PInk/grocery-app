@@ -1,5 +1,6 @@
 
 import 'package:flutter/cupertino.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:grocery_list_application/auth/authenticationService.dart';
 import 'package:flutter/widgets.dart';
@@ -18,34 +19,54 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final _controller = TextEditingController();
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
   
   List groceryList = [];
 
-  void saveNewList() {
-    if(_controller.text.isEmpty) {
-      showDialog(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            title: Center(child: Text("ERROR")),
-            content: Container(
-              height: 100,
-              child: const Center(
-                child: Text("List Name field cannot be empty", style: TextStyle(color: Color.fromRGBO(172, 45, 45, 1.0), fontSize: 18), textAlign: TextAlign.center),
+void saveNewList() {
+  if (_controller.text.isEmpty) {
+    // Show error dialog if the list name is empty
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Center(child: Text("ERROR")),
+          content: Container(
+            height: 100,
+            child: const Center(
+              child: Text(
+                "List Name field cannot be empty",
+                style: TextStyle(
+                  color: Color.fromRGBO(172, 45, 45, 1.0),
+                  fontSize: 18,
+                ),
+                textAlign: TextAlign.center,
               ),
             ),
-          );  
-        },
-      );
-      return;
-    }
+          ),
+        );
+      },
+    );
+    return;
+  }
     
+  // Add new document to Firestore
+  _firestore.collection('grocery_lists').add({
+    'name': _controller.text,
+    'completed': false,
+  }).then((value) {
     setState(() {
       groceryList.add([_controller.text, false]);
       _controller.clear();
     });
     Navigator.of(context).pop();
-  }
+  }).catchError((error) {
+    // Handle errors
+    print("Error adding document: $error");
+  });
+}
+
 
   void createNewList() {
     showDialog(
@@ -60,30 +81,49 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  void deleteList(int index) {
+void deleteList(int index) {
+  // Get the document ID of the list to delete
+  String documentId = groceryList[index].id;
+
+  // Delete the document from Firestore
+  _firestore.collection('grocery_lists').doc(documentId).delete().then((value) {
     setState(() {
       groceryList.removeAt(index);
     });
-  }
+  }).catchError((error) {
+    // Handle errors
+    print("Error deleting document: $error");
+  });
+}
 
-  void editList(index) async {
-    showDialog(
-      context: context, 
-      builder: (context) {
-        return EditListDialogBox(
-          controller: _controller,
-          onSave: () {
+void editList(int index) async {
+  showDialog(
+    context: context,
+    builder: (context) {
+      return EditListDialogBox(
+        controller: _controller,
+        onSave: () {
+          String documentId = groceryList[index].id;
+
+          // Update the name of the document in Firestore
+          _firestore.collection('grocery_lists').doc(documentId).update({
+            'name': _controller.text,
+          }).then((value) {
             setState(() {
               groceryList[index][0] = _controller.text;
               _controller.clear();
             });
             Navigator.of(context).pop();
-          },
-          onCancel: () => Navigator.of(context).pop(),
-        );
-      },
-    );
-  }
+          }).catchError((error) {
+            // Handle errors
+            print("Error updating document: $error");
+          });
+        },
+        onCancel: () => Navigator.of(context).pop(),
+      );
+    },
+  );
+}
 
   @override
   Widget build(BuildContext context) {
