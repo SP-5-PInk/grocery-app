@@ -1,4 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:grocery_list_application/pages/home_page.dart';
 
 class ManageProfilePage extends StatefulWidget {
   const ManageProfilePage({super.key});
@@ -15,6 +17,41 @@ class _ManageProfilePageState extends State<ManageProfilePage> {
 
   bool _isNewHidden = true;
   bool _isConfirmHidden = true;
+
+changePassword() async {
+  final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
+  User? currentUser = firebaseAuth.currentUser;
+
+  if (currentUser == null) {
+    return;
+  }
+
+  try {
+    AuthCredential credential = EmailAuthProvider.credential(email: currentUser.email!, password: currentPassword.text);
+    await currentUser.reauthenticateWithCredential(credential);
+
+    if (newPassword.text != confirmNewPassword.text) {
+       ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Passwords do not match')),
+      );
+      return;
+    }
+
+    await currentUser.updatePassword(newPassword.text);
+    ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Password Changed!')),
+    );
+    Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => HomePage()),
+    );
+
+  } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Error Changing password')),
+      );
+  }
+}
 
   void _showNewPassword() {
       setState(() {
@@ -62,6 +99,7 @@ class _ManageProfilePageState extends State<ManageProfilePage> {
                 ),
                 const SizedBox(height: 5),
                 TextField(
+                  obscureText: _isNewHidden,
                   controller: currentPassword,
                   decoration: InputDecoration(
                     contentPadding: EdgeInsets.symmetric(vertical: 15, horizontal: 15),
@@ -69,6 +107,10 @@ class _ManageProfilePageState extends State<ManageProfilePage> {
                     filled: true,
                     border: OutlineInputBorder(borderSide: BorderSide(color: Color.fromRGBO(42, 64, 53, 1.0))),
                     focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: BorderSide(color: Color.fromRGBO(42, 64, 53, 1.0), width: 2)),
+                    suffix: InkWell(
+                      onTap: _showNewPassword,
+                      child: Icon(_isNewHidden ? Icons.visibility_rounded: Icons.visibility_off_rounded),
+                      )
                   ),
                 ),
               ],
@@ -124,6 +166,21 @@ class _ManageProfilePageState extends State<ManageProfilePage> {
                   ),
                 ),
               ],
+            ),
+             Padding(
+              padding: const EdgeInsets.only(top: 10.0),
+              child: ElevatedButton(
+                onPressed: () {
+                    changePassword();
+                },
+                child: Text(
+                  "Change password",
+                  style: TextStyle(color: Colors.white), // Change text color to white
+                ),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.black, // Change button color to black
+                ),
+              ),
             ),
           ],
         ),

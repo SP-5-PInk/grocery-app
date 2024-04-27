@@ -40,6 +40,7 @@ dependencies:
   flutter_slidable: ^3.1.0
   material_symbols_icons: ^4.2719.3
   provider: ^6.1.2
+  cloud_firestore: ^4.17.2 
 
 dev_dependencies:
   flutter_test:
