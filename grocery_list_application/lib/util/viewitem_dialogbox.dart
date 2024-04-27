@@ -46,7 +46,6 @@ class ViewItemDialogBox extends StatelessWidget {
     ];
     return  categoryItems;
   } 
-  String? _selectedValue;
 
   @override
   Widget build(BuildContext context) {

@@ -43,25 +43,28 @@ class GroceryListTile extends StatelessWidget {
           onTap: () {
             Navigator.push(context, MaterialPageRoute(builder: (context) => ListPage(listName: listName,)));
           },
-          child: Container(
-            width: 362,
-            padding: EdgeInsets.only(left: 10, right: 24, top: 5, bottom: 5),
-            decoration: BoxDecoration(
-              color: Color.fromRGBO(217, 217, 217, 1.0),
-              border: Border(bottom: BorderSide(width: 3, color: Color.fromRGBO(138, 133, 133, 1.0)),)
-            ),
-            child: Expanded(
-              child: Text(
-                listName,
-                overflow: TextOverflow.ellipsis,
-                style: TextStyle(
-                  decoration: taskCompleted
-                  ? TextDecoration.lineThrough 
-                  : TextDecoration.none,
-                  fontSize: 30,
+          child: Row(
+            children: [
+              Expanded(
+                child: Container(
+                  padding: EdgeInsets.only(left: 10, right: 24, top: 5, bottom: 5),
+                  decoration: BoxDecoration(
+                    color: Color.fromRGBO(217, 217, 217, 1.0),
+                    border: Border(bottom: BorderSide(width: 3, color: Color.fromRGBO(138, 133, 133, 1.0)),)
+                  ),
+                  child: Text(
+                    listName,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      decoration: taskCompleted
+                      ? TextDecoration.lineThrough 
+                      : TextDecoration.none,
+                      fontSize: 30,
+                    ),
+                  ),
                 ),
               ),
-            ),
+            ],
           ),
         ),
       ),
