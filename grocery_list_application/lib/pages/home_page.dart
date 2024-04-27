@@ -1,7 +1,5 @@
 
 import 'package:flutter/material.dart';
-
-import 'package:grocery_list_application/main.dart';
 import 'package:grocery_list_application/util/addlist_dialogbox.dart';
 import 'package:grocery_list_application/util/editlist_dialogbox.dart';
 import 'package:grocery_list_application/util/list_tile.dart';
@@ -17,12 +15,6 @@ class _HomePageState extends State<HomePage> {
   final _controller = TextEditingController();
   
   List groceryList = [];
-
-  /*void checkBoxChanged(bool? value, int index) {
-    setState(() {
-      groceryList[index][1] = !groceryList[index][1];
-    });
-  } */
 
   void saveNewList() {
     if(_controller.text.isEmpty) {
@@ -111,10 +103,6 @@ class _HomePageState extends State<HomePage> {
             ),
           ],
       ),
-      /*floatingActionButton: FloatingActionButton(
-        onPressed: createNewTask,
-        child: Icon(Icons.add),
-      ), */
       
       body: Column(
         children: [
@@ -132,7 +120,6 @@ class _HomePageState extends State<HomePage> {
                 return GroceryListTile(
                   listName: groceryList[index][0], 
                   taskCompleted: groceryList[index][1], 
-                  //onChanged: (value) => checkBoxChanged(value, index),
                   deleteFunction: (context) => deleteList(index),
                   editFunction: (context) => editList(index),
                 );

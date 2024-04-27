@@ -1,9 +1,5 @@
-//import 'dart:js_util';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:grocery_list_application/pages/list_page.dart';
-
 class GroceryItemTile extends StatelessWidget {
   final String itemName; 
   final int? itemQuantity;
@@ -14,7 +10,7 @@ class GroceryItemTile extends StatelessWidget {
   Function(bool?)? onChanged;
   Function(BuildContext)? deleteFunction;
   Function(BuildContext)? editFunction;
-  
+  final VoidCallback? viewFunction;
   
   GroceryItemTile({super.key, 
     required this.itemName, 
@@ -25,7 +21,8 @@ class GroceryItemTile extends StatelessWidget {
     this.itemChecked, 
     required this.onChanged,
     required this.deleteFunction,
-    required this.editFunction
+    required this.editFunction,
+    required this.viewFunction,
   });
 
   @override
@@ -49,13 +46,10 @@ class GroceryItemTile extends StatelessWidget {
               backgroundColor: Color.fromRGBO(172, 45, 45, 1.0),
               label: 'Delete',
             )
-
           ]
         ),
         child: GestureDetector(
-          onTap: () {
-            //Navigator.push(context, MaterialPageRoute(builder: (context) => ListPage(itemName: itemName,)));
-          },
+          onTap: viewFunction,
           child: Container(
             padding: EdgeInsets.only(left: 10, right: 24, top: 5, bottom: 5),
             decoration: BoxDecoration(
@@ -70,16 +64,17 @@ class GroceryItemTile extends StatelessWidget {
                   onChanged: onChanged,
                   activeColor: Color.fromRGBO(18, 18, 18, 1),
                 ),
-                
-                Text(
-                  itemName,
-                  style: TextStyle(
-                    decoration: itemChecked!
-                    ? TextDecoration.lineThrough 
-                    : TextDecoration.none,
-                    fontSize: 30,
+                Expanded(
+                  child: Text(
+                    itemName,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      decoration: itemChecked!
+                      ? TextDecoration.lineThrough 
+                      : TextDecoration.none,
+                      fontSize: 30,
+                    ), 
                   ),
-                    
                 ),
               ],
             ),

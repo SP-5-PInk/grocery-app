@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:grocery_list_application/util/my_button.dart';
 
-class EditItemDialogBox extends StatelessWidget {
+class ViewItemDialogBox extends StatelessWidget {
   final nameController;
   final quantityController;
   final brandController;
   final categoryController;
   final notesController;
-  VoidCallback onSave;
   VoidCallback onCancel;
   String? existingItemName;
   int? existingItemQuantity;
@@ -15,26 +14,25 @@ class EditItemDialogBox extends StatelessWidget {
   String? existingItemCategory;
   String? existingItemNotes;
   
-  EditItemDialogBox({
+  ViewItemDialogBox({
     super.key, 
     required this.nameController,
     required this.quantityController,
     required this.brandController,
     required this.categoryController,
     required this.notesController,
-    required this.onSave,
     required this.onCancel,
     required this.existingItemName,
     required this.existingItemQuantity,
     required this.existingItemBrand,
     required this.existingItemCategory,
     required this.existingItemNotes,
-  }) {
-    nameController.text = existingItemName;
-    quantityController.text = existingItemQuantity.toString();
-    brandController.text = existingItemBrand;
-    categoryController.text = existingItemCategory;
-    notesController.text = existingItemNotes;
+    }) {
+    nameController.text = existingItemName ?? '';
+    quantityController.text = existingItemQuantity?.toString() ?? '';
+    brandController.text = existingItemBrand ?? '';
+    categoryController.text = existingItemCategory ?? '';
+    notesController.text = existingItemNotes ?? '';
   }
 
   List<DropdownMenuItem<String>> get dropdownItems{
@@ -53,7 +51,7 @@ class EditItemDialogBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Center(child: Text("EDIT ITEM", style: TextStyle(fontWeight: FontWeight.w900)),),
+      //title: Center(child: Text("EDIT ITEM", style: TextStyle(fontWeight: FontWeight.w900)),),
       content: Container(
         height: 450,
         width: 300,
@@ -64,6 +62,7 @@ class EditItemDialogBox extends StatelessWidget {
               children: [
                 Expanded(
                   child: TextField(
+                    readOnly: true,
                     controller: nameController,
                     decoration: InputDecoration(
                       border: OutlineInputBorder(borderSide: BorderSide(color: Color.fromRGBO(12, 12, 12, 1.0))),
@@ -75,6 +74,7 @@ class EditItemDialogBox extends StatelessWidget {
                 SizedBox(width: 20),
                 Expanded(
                   child: TextField(
+                    readOnly: true,
                     controller: quantityController,
                     decoration: InputDecoration(
                       border: OutlineInputBorder(borderSide: BorderSide(color: Color.fromRGBO(12, 12, 12, 1.0))),
@@ -85,29 +85,27 @@ class EditItemDialogBox extends StatelessWidget {
                 ),
               ],
             ),
-            //SizedBox(height: 10),
             TextField(
+              readOnly: true,
               controller: brandController,
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(borderSide: BorderSide(color: Color.fromRGBO(12, 12, 12, 1.0))),
-                    focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: BorderSide(color: Color.fromRGBO(12, 12, 12, 1.0), width: 2)),
-                    labelText: "Brand",
-                  ),
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(borderSide: BorderSide(color: Color.fromRGBO(12, 12, 12, 1.0))),
+                  focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: BorderSide(color: Color.fromRGBO(12, 12, 12, 1.0), width: 2)),
+                  labelText: "Brand",
+                ),
             ),
-            DropdownButtonFormField(
-              value: _selectedValue,
-              onChanged: (String? newValue) {
-                  _selectedValue = newValue!;
-                },
-              items: dropdownItems,
-              decoration: InputDecoration(
-                border: OutlineInputBorder(borderSide: BorderSide(color: Color.fromRGBO(12, 12, 12, 1.0))),
-                    focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: BorderSide(color: Color.fromRGBO(12, 12, 12, 1.0), width: 2)),
-                    labelText: "Category",
+            TextField(
+              readOnly: true,
+              controller: categoryController,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(borderSide: BorderSide(color: Color.fromRGBO(12, 12, 12, 1.0))),
+                  focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: BorderSide(color: Color.fromRGBO(12, 12, 12, 1.0), width: 2)),
+                  labelText: "Category",
               ),
               
             ),
             TextField(
+              readOnly: true,
               controller: notesController,
                   decoration: InputDecoration(
                     isDense: true,
@@ -120,9 +118,6 @@ class EditItemDialogBox extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                MyButton(text: "Save", color: Color.fromRGBO(12, 12, 12, 1.0), onPressed: onSave),
-                
-                const SizedBox(width:10),
             
                 MyButton(text: "Cancel", color: Color.fromRGBO(172, 45, 45, 1.0), onPressed: onCancel)
               ],

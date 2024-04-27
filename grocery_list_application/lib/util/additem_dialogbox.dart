@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:grocery_list_application/util/my_button.dart';
 
 class ItemDialogBox extends StatelessWidget {
@@ -23,9 +21,10 @@ class ItemDialogBox extends StatelessWidget {
     required this.onCancel,
   });
 
-  //String _selectedValue;
   List<DropdownMenuItem<String>> get dropdownItems{
     List<DropdownMenuItem<String>> categoryItems = [
+      DropdownMenuItem(child: Text("BEVERAGES"),value: "BEVERAGES"),
+      DropdownMenuItem(child: Text("BREAD & BAKERY"),value: "BREAD & BAKERY"),
       DropdownMenuItem(child: Text("PRODUCE"),value: "PRODUCE"),
       DropdownMenuItem(child: Text("MEAT"),value: "MEAT"),
       DropdownMenuItem(child: Text("DAIRY"),value: "DAIRY"),
@@ -34,7 +33,6 @@ class ItemDialogBox extends StatelessWidget {
     return  categoryItems;
   } 
   String? _selectedValue;
-  //List<String> listCategory = ['PRODUCE', 'MEAT', 'DAIRY', 'OTHER'];
 
   @override
   Widget build(BuildContext context) {

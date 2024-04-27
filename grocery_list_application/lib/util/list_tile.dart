@@ -37,7 +37,6 @@ class GroceryListTile extends StatelessWidget {
               backgroundColor: Color.fromRGBO(172, 45, 45, 1.0),
               label: 'Delete',
             )
-
           ]
         ),
         child: GestureDetector(
@@ -51,13 +50,16 @@ class GroceryListTile extends StatelessWidget {
               color: Color.fromRGBO(217, 217, 217, 1.0),
               border: Border(bottom: BorderSide(width: 3, color: Color.fromRGBO(138, 133, 133, 1.0)),)
             ),
-            child: Text(
-              listName,
-              style: TextStyle(
-                decoration: taskCompleted
-                ? TextDecoration.lineThrough 
-                : TextDecoration.none,
-                fontSize: 30,
+            child: Expanded(
+              child: Text(
+                listName,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(
+                  decoration: taskCompleted
+                  ? TextDecoration.lineThrough 
+                  : TextDecoration.none,
+                  fontSize: 30,
+                ),
               ),
             ),
           ),

@@ -1,8 +1,8 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:grocery_list_application/util/edititem_dialogbox.dart';
 import 'package:grocery_list_application/util/item_tile.dart';
 import 'package:grocery_list_application/util/additem_dialogbox.dart';
+import 'package:grocery_list_application/util/viewitem_dialogbox.dart';
 
 class ListPage extends StatefulWidget {
   final String listName;
@@ -50,10 +50,18 @@ class _ListPageState extends State<ListPage> {
   }
 
   void createNewItem() {
+    setState(() {
+      nameController.clear();
+      quantityController.clear();
+      brandController.clear();
+      categoryController.clear();
+      notesController.clear();
+    });
     showDialog(
       context: context, 
       builder: (context) {
         return ItemDialogBox(
+          
           nameController: nameController,
           quantityController: quantityController,
           brandController: brandController,
@@ -108,7 +116,6 @@ class _ListPageState extends State<ListPage> {
   }
 
   void editItem(index) async {
-    //final itemFromList = itemList[index];
     showDialog(
       context: context, 
       builder: (context) {
@@ -116,6 +123,7 @@ class _ListPageState extends State<ListPage> {
           nameController: nameController,
           quantityController: quantityController,
           brandController: brandController,
+          categoryController: categoryController,
           notesController: notesController,
           existingItemName: itemList[index].itemName,
           existingItemQuantity: itemList[index].itemQuantity,
@@ -126,9 +134,39 @@ class _ListPageState extends State<ListPage> {
             setState(() {
               itemList[index].itemName = nameController.text;
               nameController.clear();
+              itemList[index].itemQuantity = int.tryParse(quantityController.text);
+              quantityController.clear();
+              itemList[index].itemBrand = brandController.text;
+              brandController.clear();
+              itemList[index].itemCategory = categoryController.text;
+              categoryController.clear();
+              itemList[index].itemNotes = notesController.text;
+              notesController.clear();
+              checkBoxChanged(false, index);
             });
             Navigator.of(context).pop();
           },
+          onCancel: () => Navigator.of(context).pop(),
+        );
+      },
+    );
+  }
+
+  void viewItem(index) {
+    showDialog(
+      context: context, 
+      builder: (context) {
+        return ViewItemDialogBox(
+          nameController: TextEditingController(text: itemList[index].itemName),
+          quantityController: TextEditingController(text: itemList[index].itemQuantity.toString()),
+          brandController: TextEditingController(text: itemList[index].itemBrand),
+          categoryController: TextEditingController(text: itemList[index].itemCategory),
+          notesController: TextEditingController(text: itemList[index].itemNotes),
+          existingItemName: itemList[index].itemName,
+          existingItemQuantity: itemList[index].itemQuantity,
+          existingItemBrand: itemList[index].itemBrand,
+          existingItemCategory: itemList[index].itemCategory,
+          existingItemNotes: itemList[index].itemNotes,
           onCancel: () => Navigator.of(context).pop(),
         );
       },
@@ -144,17 +182,16 @@ class _ListPageState extends State<ListPage> {
         toolbarHeight: 100,
         leading: Builder(
             builder:(context) {
-            return IconButton(
-              icon: const Padding(padding: EdgeInsets.only(left: 15), child: Icon(Icons.arrow_back_rounded, color: Color.fromRGBO(42, 64, 53, 1.0), size: 40)),
-              onPressed: () {
-                Navigator.of(context).pop();
-            },
-            );
+              return IconButton(
+                icon: const Padding(padding: EdgeInsets.only(left: 15), child: Icon(Icons.arrow_back_rounded, color: Color.fromRGBO(42, 64, 53, 1.0), size: 40)),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              );
             }  
           ),
         centerTitle: true,
         title: Text(widget.listName, style: TextStyle(fontWeight: FontWeight.w900, fontSize: 30, color: Color.fromRGBO(42, 64, 53, 1.0)),),
-        //title: const Text(appBarTitle, style: TextStyle(fontWeight: FontWeight.w900, fontSize: 30, color: Color.fromRGBO(42, 64, 53, 1.0)),),
         actions: [
             IconButton(
               icon: const Padding(padding: EdgeInsets.only(right: 15), child: Icon(Icons.add_rounded, color: Color.fromRGBO(42, 64, 53, 1.0), size: 40)), // Add the icon here and set its color
@@ -168,6 +205,7 @@ class _ListPageState extends State<ListPage> {
           SizedBox(height: 40,),
           Expanded(
             child: ListView.builder(
+              
               itemCount: itemList.length,
               itemBuilder: (context, index) {
                 return GroceryItemTile(
@@ -176,6 +214,7 @@ class _ListPageState extends State<ListPage> {
                   onChanged: (value) => checkBoxChanged(value, index),
                   deleteFunction: (context) => deleteItem(index),
                   editFunction: (context) => editItem(index),
+                  viewFunction: () {viewItem(index);},  
                 );
               },
             ),
