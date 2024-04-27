@@ -82,7 +82,10 @@ class _RegistrationState extends State<Registration> {
               padding: const EdgeInsets.only(top: 5.0, bottom: 10.0),
               child: ElevatedButton(
                 onPressed: signUp,
-                child: Text("Register"),
+            child: Text(
+                "Register",
+                style: TextStyle(color: Color.fromARGB(255, 21, 52, 21)),
+              ),
               ),
             ),
             SizedBox(height: 10),

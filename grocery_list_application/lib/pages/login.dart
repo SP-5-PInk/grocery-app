@@ -1,7 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:grocery_list_application/auth/authenticationService.dart';
 import 'package:grocery_list_application/pages/registration.dart';
-import 'package:grocery_list_application/pages/home_page.dart'; // Import HomePage class
+import 'package:grocery_list_application/pages/home_page.dart';
+import 'package:provider/provider.dart'; // Import HomePage class
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -10,28 +12,12 @@ class Login extends StatefulWidget {
   State<Login> createState() => _LoginState();
 }
 
+
+
 class _LoginState extends State<Login> {
   TextEditingController email = TextEditingController();
   TextEditingController password = TextEditingController();
 
-  signIn() async {
-    try {
-      UserCredential userCredential = await FirebaseAuth.instance
-          .signInWithEmailAndPassword(
-              email: email.text, password: password.text);
-      // Navigate to HomePage after successful sign-in
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => HomePage()),
-      );
-    } on FirebaseAuthException catch (e) {
-      // Handle sign-in errors
-      print("Sign-in error: ${e.message}");
-      // Show snackbar or toast with error message
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text('Error: ${e.message}')));
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -78,8 +64,13 @@ class _LoginState extends State<Login> {
             Padding(
               padding: const EdgeInsets.only(top: 15.0),
               child: ElevatedButton(
-                onPressed: signIn,
-                child: Text("Login"),
+                onPressed: () {
+                  context.read<AuthenticationService>().signIn(email: email.text, password: password.text);
+                },
+              child: Text(
+                  "Login",
+                  style: TextStyle(color: Color.fromARGB(255, 21, 52, 21)),
+                ),
               ),
             ),
             SizedBox(height: 10),

@@ -1,13 +1,42 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:grocery_list_application/auth/authenticationService.dart';
+import 'package:grocery_list_application/pages/home_page.dart';
 import 'package:grocery_list_application/pages/login.dart';
 import 'package:grocery_list_application/pages/welcomescreen.dart';
 import 'package:grocery_list_application/wrapper.dart';
+import 'package:provider/provider.dart';
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  runApp(const MyApp());
+  runApp(MaterialApp(
+    home: MultiProvider(providers: [
+      Provider<AuthenticationService>(
+        create: (_)=>AuthenticationService(FirebaseAuth.instance),
+        ),
+      StreamProvider(create: (context) =>
+        context.read<AuthenticationService>().authStateChanges, 
+        initialData: null)
+    ], child: AuthenticationWrapper(),
+    ),
+  ));
+}
+
+class AuthenticationWrapper extends StatelessWidget {
+  const AuthenticationWrapper({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final firebaseUser = context.watch<User?>();
+    print(firebaseUser);
+    if(firebaseUser != null){
+        return HomePage();
+    }else{
+      return MyApp();
+    }
+  }
 }
 
 class MyApp extends StatelessWidget {

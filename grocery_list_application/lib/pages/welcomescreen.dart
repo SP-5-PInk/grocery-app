@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:grocery_list_application/pages/login.dart';
 import 'package:grocery_list_application/wrapper.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 
 class WelcomeScreen extends StatelessWidget {
@@ -50,7 +51,10 @@ class WelcomeScreen extends StatelessWidget {
                 MaterialPageRoute(builder: (context) => Login()),
               );
             },         
-            child: Text('Start'),
+            child: Text(
+                "Start",
+                style: TextStyle(color: Color.fromARGB(255, 21, 52, 21)),
+              ),
           ),
           SizedBox(height: 20),
         ],

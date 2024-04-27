@@ -1,8 +1,10 @@
 
 import 'package:flutter/material.dart';
+import 'package:grocery_list_application/auth/authenticationService.dart';
 import 'package:grocery_list_application/util/addlist_dialogbox.dart';
 import 'package:grocery_list_application/util/editlist_dialogbox.dart';
 import 'package:grocery_list_application/util/list_tile.dart';
+import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -157,39 +159,46 @@ class _HomePageState extends State<HomePage> {
       
       
       drawer: Drawer(
-          backgroundColor: Color.fromRGBO(250, 249, 246, 1.0),
-          child: GestureDetector(
-            onTap: () {
-              //Navigator.pushNamed(context,'/homepage');
-            },
-            child: const Column(
-              children: [
-                DrawerHeader(
-                  child: Row(
-                    children: [
-                      Icon(Icons.menu, size: 40, color: Color.fromRGBO(192, 180, 180, 1.0)),
-                      
-                      Padding(
-                        padding: EdgeInsets.all(10.0),
-                        child: Text("M E N U", style: TextStyle(color: Color.fromRGBO(192, 180, 180, 1.0), fontSize: 30, fontWeight: FontWeight.bold), ),
-                      )
-                    ],
-                  ),
-                ),  
-                ListTile(
-                  tileColor: Color.fromRGBO(192, 180, 180, 1.0),
-                  leading: Icon(Icons.settings_rounded, color: Color.fromRGBO(18, 18, 18, 1.0), ),
-                  title: Text("SETTINGS", style: TextStyle(color: Color.fromRGBO(18, 18, 18, 1.0), fontWeight: FontWeight.bold),),
-                ),
-                ListTile(
-                  tileColor: Color.fromRGBO(192, 180, 180, 1.0),
-                  leading: Icon(Icons.account_circle_rounded, color: Color.fromRGBO(18, 18, 18, 1.0)),
-                  title: Text("MANAGE PROFILE", style: TextStyle(color: Color.fromRGBO(18, 18, 18, 1.0), fontWeight: FontWeight.bold),)
-                ),      
-              ],
+        backgroundColor: Color.fromRGBO(250, 249, 246, 1.0),
+        child: Column(
+          children: [
+            DrawerHeader(
+              child: Row(
+                children: [
+                  Icon(Icons.menu, size: 40, color: Color.fromRGBO(192, 180, 180, 1.0)),
+                  Padding(
+                    padding: EdgeInsets.all(10.0),
+                    child: Text("M E N U", style: TextStyle(color: Color.fromRGBO(192, 180, 180, 1.0), fontSize: 30, fontWeight: FontWeight.bold), ),
+                  )
+                ],
+              ),
+            ),  
+            ListTile(
+              tileColor: Color.fromRGBO(192, 180, 180, 1.0),
+              leading: Icon(Icons.settings_rounded, color: Color.fromRGBO(18, 18, 18, 1.0), ),
+              title: Text("SETTINGS", style: TextStyle(color: Color.fromRGBO(18, 18, 18, 1.0), fontWeight: FontWeight.bold),),
             ),
-          ),  
+            ListTile(
+              tileColor: Color.fromRGBO(192, 180, 180, 1.0),
+              leading: Icon(Icons.account_circle_rounded, color: Color.fromRGBO(18, 18, 18, 1.0)),
+              title: Text("MANAGE PROFILE", style: TextStyle(color: Color.fromRGBO(18, 18, 18, 1.0), fontWeight: FontWeight.bold),)
+            ),
+            Expanded(child: Container()), // Spacer
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.black, // Button fill color
+              ),
+              onPressed: () {
+                context.read<AuthenticationService>().signOut();
+              },
+              child: Text(
+                "Logout",
+                style: TextStyle(color: Colors.white),
+              ),
+            ),
+          ],
         ),
+      ),
     );
   }
 }
