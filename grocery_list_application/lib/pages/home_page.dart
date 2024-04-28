@@ -22,7 +22,16 @@ class _HomePageState extends State<HomePage> {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   
-  List groceryList = [];
+List groceryList = [];
+
+
+void createList(String listName) {
+  // Add a new document to the grocery_lists collection in Firestore
+  FirebaseFirestore.instance.collection('grocery_lists').add({
+    'name': listName,
+    'completed': false,
+  });
+}
 
 void saveNewList() {
   if (_controller.text.isEmpty) {
@@ -51,19 +60,13 @@ void saveNewList() {
     return;
   }
     
-  // Add new document to Firestore
-  _firestore.collection('grocery_lists').add({
-    'name': _controller.text,
-    'completed': false,
-  }).then((value) {
-    setState(() {
-      groceryList.add([_controller.text, false]);
-      _controller.clear();
-    });
+  // Call createList function to add new document to Firestore
+  createList(_controller.text);
+
+  // Clear the text field and dismiss the dialog
+  setState(() {
+    _controller.clear();
     Navigator.of(context).pop();
-  }).catchError((error) {
-    // Handle errors
-    print("Error adding document: $error");
   });
 }
 
